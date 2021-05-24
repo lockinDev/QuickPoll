@@ -13,14 +13,14 @@ public class Option {
 	@Column(name = "OPTION_ID")
 	private Long id;
 	
+	@Column(name = "OPTION_VALUE")
+	private String value;
+
 	public Option(String value) {
 		super();
 		this.value = value;
 	}
 	
-	@Column(name = "OPTION_VALUE")
-	private String value;
-
 	public Long getId() {
 		return id;
 	}
