@@ -7,7 +7,8 @@ public class VoteResult {
 	private int totalVotes;
     private Collection<OptionCount> results;
     
-    
+    public VoteResult() {
+	}
     
 	public VoteResult(int totalVotes, Collection<OptionCount> results) {
 		super();
