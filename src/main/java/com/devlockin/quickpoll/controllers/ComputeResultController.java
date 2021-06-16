@@ -26,6 +26,7 @@ public class ComputeResultController {
 	public ResponseEntity<?> computeResult(@RequestParam Long pollId) {
 		VoteResult voteResult = new VoteResult();
 		Iterable<Vote> allVotes = voteRepository.findByPoll(pollId);
+		voteResult = getVoteResult(allVotes);
 		return new ResponseEntity<VoteResult>(voteResult, HttpStatus.OK);
 	}
 	
