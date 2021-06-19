@@ -18,59 +18,61 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devlockin.quickpoll.entities.Poll;
+import com.devlockin.quickpoll.exceptions.ResourceNotFoundException;
 import com.devlockin.quickpoll.repositories.PollRepository;
 
 @RestController
 public class PollController {
-	
+
 	/*
-	 * Is added Inject unless Autowired  
-	 * to be more compliant.
-	 * */
+	 * Is added Inject unless Autowired to be more compliant.
+	 */
 	@Inject
 	private PollRepository pollRepository;
-	
-	
+
 	@GetMapping("/polls")
-	public ResponseEntity<Iterable<Poll>> getAllPolls(){
+	public ResponseEntity<Iterable<Poll>> getAllPolls() {
 		Iterable<Poll> allPolls = pollRepository.findAll();
 		return new ResponseEntity<>(allPolls, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/polls/{pollId}")
 	public ResponseEntity<?> getPoll(@PathVariable Long pollId) throws Exception {
-	        Optional<Poll> poll = pollRepository.findById(pollId);
-	        if(!poll.isPresent()) {
-	                throw new Exception("Pool not found");
-	        }
-	        return new ResponseEntity<>(poll.get(), HttpStatus.OK);
+		Optional<Poll> poll = pollRepository.findById(pollId);
+		if (!poll.isPresent()) {
+			throw new ResourceNotFoundException("Poll with id " + pollId + " not found");
+		}
+		return new ResponseEntity<>(poll.get(), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/polls")
 	public ResponseEntity<?> createPoll(@RequestBody Poll poll) {
 		poll = pollRepository.save(poll);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newPollUri = ServletUriComponentsBuilder
-                                .fromCurrentRequest()
-                                .path("/{id}")
-                                .buildAndExpand(poll.getId())
-                                .toUri();
-        responseHeaders.setLocation(newPollUri);
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+		HttpHeaders responseHeaders = new HttpHeaders();
+		URI newPollUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(poll.getId())
+				.toUri();
+		responseHeaders.setLocation(newPollUri);
+		return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/polls/{pollId}")
-	public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable
-	Long pollId) {
-	        Poll newPoll = pollRepository.save(poll);
-	        return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId) {
+		Poll newPoll = pollRepository.save(poll);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/polls/{pollId}")
 	public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
-	        pollRepository.deleteById(pollId);
-	        return new ResponseEntity<>(HttpStatus.OK);
+		pollRepository.deleteById(pollId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
+
+	private Poll verifyPoll(Long pollId) throws ResourceNotFoundException {
+		Optional<Poll> poll = pollRepository.findById(pollId);
+		if (!poll.isPresent()) {
+			throw new ResourceNotFoundException("Poll with id " + pollId + " not found");
+		}
+		return poll.get();
+	}
+
 }
