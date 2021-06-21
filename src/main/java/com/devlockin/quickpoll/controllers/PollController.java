@@ -53,14 +53,16 @@ public class PollController {
 
 	@PutMapping("/polls/{pollId}")
 	public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId) {
-		Poll newPoll = pollRepository.save(poll);
-		return new ResponseEntity<>(HttpStatus.OK);
+		 	verifyPoll(pollId);
+	        pollRepository.save(poll);
+	        return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/polls/{pollId}")
 	public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
+		verifyPoll(pollId);
 		pollRepository.deleteById(pollId);
-		return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	private Poll verifyPoll(Long pollId) throws ResourceNotFoundException {
