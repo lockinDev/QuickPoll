@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class PollController {
 	}
 
 	@PostMapping("/polls")
-	public ResponseEntity<?> createPoll(@RequestBody Poll poll) {
+	public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll) {
 		poll = pollRepository.save(poll);
 		HttpHeaders responseHeaders = new HttpHeaders();
 		URI newPollUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(poll.getId())
