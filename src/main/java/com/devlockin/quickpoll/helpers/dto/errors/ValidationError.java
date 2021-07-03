@@ -3,7 +3,7 @@ package com.devlockin.quickpoll.helpers.dto.errors;
 public class ValidationError {
 
 	private String code;
-    private String message;        
+    private String message;
     
 	public ValidationError(String code, String message) {
 		super();

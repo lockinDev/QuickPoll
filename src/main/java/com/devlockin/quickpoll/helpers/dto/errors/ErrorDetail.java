@@ -9,9 +9,18 @@ public class ErrorDetail {
 	private String title, description, developerMessage;
 	private int status;
 	private long timeStamp;
-	private Map<String, List<ValidationError>> errors = new HashMap()();
+	private Map<String, List<ValidationError>> errors = new HashMap();
 	
 	
+
+	public ErrorDetail(String title, String description, String developerMessage, int status, long timeStamp) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.developerMessage = developerMessage;
+		this.status = status;
+		this.timeStamp = timeStamp;
+	}
 
 	public ErrorDetail(String title, String description, String developerMessage, int status, long timeStamp,
 			Map<String, List<ValidationError>> errors) {
@@ -43,5 +52,11 @@ public class ErrorDetail {
 	public long getTimeStamp() {
 		return timeStamp;
 	}
+
+	public Map<String, List<ValidationError>> getErrors() {
+		return errors;
+	}
+	
+	
 
 }
