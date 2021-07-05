@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,6 +23,10 @@ import com.devlockin.quickpoll.helpers.dto.errors.ValidationError;
 
 @ControllerAdvice
 public class RestExceptionHandler {
+	
+	 @Inject
+     private MessageSource messageSource;
+	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnfe,
 			HttpServletRequest request) {
@@ -41,7 +47,7 @@ public class RestExceptionHandler {
 
 				errors.put(fe.getField(), validationErrorList);
 			}
-			ValidationError validationError = new ValidationError(fe.getCode(), fe.getDefaultMessage());
+			ValidationError validationError = new ValidationError(fe.getCode(), messageSource.getMessage(fe, null));
 			validationErrorList.add(validationError);
 		}
 		
