@@ -70,5 +70,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, errorDetail, headers, status, request);
 	}
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		
+		ErrorDetail errorDetail = new ErrorDetail("Argument not valid", ex.getMessage(), ex.getClass().getName(),
+				status.value(), new Date().getTime());
+		
+		return handleMethodArgumentNotValid(ex, headers, status, request);
+	}
+	
 
 }
