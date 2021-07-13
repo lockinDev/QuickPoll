@@ -22,7 +22,11 @@ import com.devlockin.quickpoll.entities.Poll;
 import com.devlockin.quickpoll.exceptions.ResourceNotFoundException;
 import com.devlockin.quickpoll.repositories.PollRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(value = "polls", description = "Poll API")
 public class PollController {
 
 	/*
@@ -31,17 +35,20 @@ public class PollController {
 	@Inject
 	private PollRepository pollRepository;
 
+	@ApiOperation(value = "Retrieves all the polls", response=Poll.class, responseContainer="List")
 	@GetMapping("/polls")
 	public ResponseEntity<Iterable<Poll>> getAllPolls() {
 		Iterable<Poll> allPolls = pollRepository.findAll();
 		return new ResponseEntity<>(allPolls, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Retrieves a Poll associated with the pollId", response=Poll.class)
 	@GetMapping("/polls/{pollId}")
 	public ResponseEntity<?> getPoll(@PathVariable Long pollId) throws Exception {
 		return new ResponseEntity<>(verifyPoll(pollId), HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value = "Creates a new Poll", notes="The newly created poll Id will be sent in the location response header", response = Void.class)
 	@PostMapping("/polls")
 	public ResponseEntity<?> createPoll(@Valid @RequestBody Poll poll) {
 		poll = pollRepository.save(poll);
