@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -40,10 +43,10 @@ public class PollController {
 	@Inject
 	private PollRepository pollRepository;
 
+	@RequestMapping(value = "/polls", method = RequestMethod.GET)
 	@ApiOperation(value = "Retrieves all the polls", response = Poll.class, responseContainer = "List")
-	@GetMapping("/polls")
-	public ResponseEntity<Iterable<Poll>> getAllPolls() {
-		Iterable<Poll> allPolls = pollRepository.findAll();
+	public ResponseEntity<Page<Poll>> getAllPolls(Pageable pageable) {
+		Page<Poll> allPolls = pollRepository.findAll(pageable);
 		return new ResponseEntity<>(allPolls, HttpStatus.OK);
 	}
 
