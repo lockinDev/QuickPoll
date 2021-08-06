@@ -17,8 +17,8 @@ import com.devlockin.quickpoll.helpers.dto.OptionCount;
 import com.devlockin.quickpoll.helpers.dto.VoteResult;
 import com.devlockin.quickpoll.repositories.VoteRepository;
 
-@RestController("computeResultControllerV2")
-@RequestMapping("/v2")
+@RestController("computeResultControllerV3")
+@RequestMapping("/v3")
 public class ComputeResultController {
 
 	@Inject

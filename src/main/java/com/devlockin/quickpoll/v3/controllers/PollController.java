@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RestController("pollControllerV2")
-@RequestMapping("/v2")
+@RestController("pollControllerV3")
+@RequestMapping("/v3")
 @Api(value = "polls", description = "Poll API")
 public class PollController {
 
@@ -75,7 +76,8 @@ public class PollController {
 		pollRepository.save(poll);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@DeleteMapping("/polls/{pollId}")
 	public ResponseEntity<?> deletePoll(@PathVariable Long pollId) {
 		verifyPoll(pollId);

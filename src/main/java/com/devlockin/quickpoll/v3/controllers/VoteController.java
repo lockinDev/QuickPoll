@@ -16,8 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.devlockin.quickpoll.entities.Vote;
 import com.devlockin.quickpoll.repositories.VoteRepository;
 
-@RestController("voteControllerV2")
-@RequestMapping("/v2")
+@RestController("voteControllerV3")
+@RequestMapping("/v3")
 public class VoteController {
 
 	@Inject
