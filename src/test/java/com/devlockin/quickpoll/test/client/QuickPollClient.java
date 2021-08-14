@@ -1,5 +1,7 @@
 package com.devlockin.quickpoll.test.client;
 
+import java.net.URI;
+
 import org.springframework.web.client.RestTemplate;
 
 import com.devlockin.quickpoll.entities.Poll;
@@ -11,6 +13,10 @@ public class QuickPollClient {
 
 	public Poll getPollById(Long pollId) {
 		return restTemplate.getForObject(QUICK_POLL_URI_V1 + "/{pollId}", Poll.class, pollId);
+	}
+	
+	public URI createPoll(Poll poll) {
+        return restTemplate.postForLocation( QUICK_POLL_URI_V1, poll);
 	}
 
 }
