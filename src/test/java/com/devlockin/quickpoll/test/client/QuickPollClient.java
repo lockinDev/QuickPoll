@@ -14,9 +14,13 @@ public class QuickPollClient {
 	public Poll getPollById(Long pollId) {
 		return restTemplate.getForObject(QUICK_POLL_URI_V1 + "/{pollId}", Poll.class, pollId);
 	}
-	
+
 	public URI createPoll(Poll poll) {
-        return restTemplate.postForLocation( QUICK_POLL_URI_V1, poll);
+		return restTemplate.postForLocation(QUICK_POLL_URI_V1, poll);
+	}
+
+	public void updatePoll(Poll poll) {
+		restTemplate.put(QUICK_POLL_URI_V1 + "/{pollId}", poll, poll.getId());
 	}
 
 }
