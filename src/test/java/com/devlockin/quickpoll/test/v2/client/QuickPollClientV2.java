@@ -1,13 +1,11 @@
-package com.devlockin.quickpoll.test.v2.client.copy;
+package com.devlockin.quickpoll.test.v2.client;
 
-import java.net.URI;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import org.springframework.web.client.RestTemplate;
 
 import com.devlockin.quickpoll.entities.Poll;
 

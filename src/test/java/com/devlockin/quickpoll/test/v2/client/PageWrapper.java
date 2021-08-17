@@ -1,4 +1,4 @@
-package com.devlockin.quickpoll.test.v2.client.copy;
+package com.devlockin.quickpoll.test.v2.client;
 
 import java.util.List;
 import org.springframework.data.domain.Sort;
