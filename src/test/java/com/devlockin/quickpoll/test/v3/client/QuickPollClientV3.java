@@ -1,15 +1,10 @@
 package com.devlockin.quickpoll.test.v3.client;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import com.devlockin.quickpoll.entities.Poll;
 
 public class QuickPollClientV3 {
 
